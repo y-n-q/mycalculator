@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>简单计算器</title>
+    <style>
+        .calculator {
+            width: 300px;                          /* 设置宽度 */
+            margin: 50px auto;                     /* 上下间距50px，左右自动居中 */
+            padding: 20px;                         /* 内部填充 */
+            border: 1px solid #ccc;                /* 边框样式 */
+            border-radius: 5px;                    /* 圆角边框 */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);  /* 添加阴影效果 */
+        }
+        
+        /* 显示屏的样式 */
+        #display {
+            width: 100%;                           /* 宽度占满容器 */
+            height: 40px;                          /* 高度 */
+            margin-bottom: 10px;                   /* 下方间距 */
+            font-size: 20px;                       /* 字体大小 */
+            text-align: right;                     /* 文字右对齐 */
+            padding: 5px;                          /* 内部填充 */
+            box-sizing: border-box;                /* 盒模型计算方式 */
+        }
+        
+        /* 按钮网格布局 */
+        .buttons {
+            display: grid;                         /* 使用网格布局 */
+            grid-template-columns: repeat(4, 1fr);  /* 4列等宽 */
+            gap: 5px;                              /* 按钮之间的间距 */
+        }
+        
+        /* 按钮基本样式 */
+        button {
+            padding: 15px;                         /* 按钮内部填充 */
+            font-size: 18px;                       /* 字体大小 */
+            border: 1px solid #ccc;                /* 边框样式 */
+            border-radius: 5px;                    /* 圆角 */
+            background-color: #f8f9fa;             /* 背景色 */
+            cursor: pointer;                       /* 鼠标样式为手型 */
+        }
+        
+        /* 按钮悬停效果 */
+        button:hover {
+            background-color: #e9ecef;             /* 悬停时的背景色 */
+        }
+        
+        /* 运算符按钮样式 */
+        .operator {
+            background-color: #ffc107;             /* 运算符按钮的背景色（黄色） */
+        }
+        
+        /* 等号按钮样式 */
+        .equals {
+            background-color: #28a745;             /* 等号按钮的背景色（绿色） */
+            color: white;                          /* 文字颜色 */
+        }
+        
+        /* 清除按钮样式 */
+        .clear {
+            background-color: #dc3545;             /* 清除按钮的背景色（红色） */
+            color: white;                          /* 文字颜色 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 计算器主体结构 -->
+    <div class="calculator">
+        <!-- 显示屏，readonly属性使其只读 -->
+        <input type="text" id="display" readonly>
+        <!-- 按钮区域 -->
+        <div class="buttons">
+            <!-- 第一行按钮：清除、括号和除号 -->
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button onclick="appendNumber('(')">(</button>
+            <button onclick="appendNumber(')')">)</button>
+            <button class="operator" onclick="appendOperator('/')">/</button>
+            
+            <!-- 数字按钮和运算符（7-9） -->
+            <button onclick="appendNumber('7')">7</button>
+            <button onclick="appendNumber('8')">8</button>
+            <button onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            
+            <!-- 数字按钮和运算符（4-6） -->
+            <button onclick="appendNumber('4')">4</button>
+            <button onclick="appendNumber('5')">5</button>
+            <button onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('-')">-</button>
+            
+            <!-- 数字按钮和运算符（1-3） -->
+            <button onclick="appendNumber('1')">1</button>
+            <button onclick="appendNumber('2')">2</button>
+            <button onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            
+            <!-- 最后一行：0、小数点和等号 -->
+            <button onclick="appendNumber('0')">0</button>
+            <button onclick="appendNumber('.')">.</button>
+            <!-- 等号按钮占据两列 -->
+            <button class="equals" onclick="calculate()" style="grid-column: span 2">=</button>
+        </div>
+    </div>
+
+    <script>
+        // 获取显示屏元素
+        const display = document.getElementById('display');
+
+        // 添加数字到显示屏
+        function appendNumber(num) {
+            display.value += num;
+        }
+
+        // 添加运算符到显示屏
+        function appendOperator(operator) {
+            display.value += operator;
+        }
+
+        // 清除显示屏内容
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        // 计算结果
+        function calculate() {
+            try {
+                // 使用eval()函数计算表达式的值
+                display.value = eval(display.value);
+            } catch (error) {
+                // 如果计算出错，显示错误信息
+                display.value = '错误';
+            }
+        }
+    </script>
+</body>
+</html>
